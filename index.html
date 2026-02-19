@@ -13,17 +13,23 @@
             margin: 0;
             background-color: #f4f4f4;
             color: #333;
+            overflow-x: hidden; /* Evita scroll horizontal molesto en móviles */
         }
 
-        /* --- Banner Principal --- */
+        /* --- Banner Principal Optimizado --- */
         header {
             width: 100%;
-            height: 400px;
+            height: 300px; /* Altura inicial para móviles */
             background-image: url("bannerfinal.png");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center top;
             animation: fadeInDown 1.5s ease;
+        }
+
+        /* Ajuste de banner para pantallas más grandes */
+        @media (min-width: 768px) {
+            header { height: 400px; }
         }
 
         /* --- Navegación --- */
@@ -41,26 +47,40 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-wrap: wrap; /* Para que los botones no se amontonen en pantallas mini */
+            justify-content: center;
         }
         nav a {
             color: white;
             text-decoration: none;
-            margin: 0 20px;
+            margin: 5px 15px;
             font-weight: bold;
             cursor: pointer;
             display: block;
             transition: 0.3s;
+            font-size: 0.95em;
         }
         nav a:hover { color: #ffd700; }
 
-        /* --- Contenedor de Columnas --- */
+        /* --- Contenedor de Columnas (RESPONSIVE) --- */
         .container {
             display: flex;
-            justify-content: space-around;
+            flex-direction: column; /* Por defecto en móvil: uno bajo otro */
             padding: 20px;
-            gap: 15px;
+            gap: 20px;
             animation: fadeInUp 1.5s ease;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
+        /* Cuando la pantalla es ancha (PC), volvemos a las 3 columnas */
+        @media (min-width: 992px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+        }
+
         .column {
             flex: 1;
             padding: 30px 20px;
@@ -71,7 +91,7 @@
             background-position: center;
             position: relative;
             overflow: hidden;
-            min-height: 520px; /* Un poco más alto para los textos largos */
+            min-height: 480px;
             display: flex;
             flex-direction: column;
         }
@@ -79,15 +99,18 @@
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.65); /* Un poco más oscuro para mejor lectura en móvil */
             transition: 0.5s;
         }
         .column h2, .column ul, .column .swiper {
             position: relative;
             z-index: 1;
         }
-        .column ul { padding-left: 20px; flex-grow: 1; }
-        .column:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .column h2 { font-size: 1.5em; margin-bottom: 15px; }
+        .column ul { padding-left: 20px; flex-grow: 1; margin-bottom: 20px; }
+        .column ul li { margin-bottom: 10px; font-size: 0.95em; }
+
+        .column:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         
         .electronica { background-image: url("electronica.jpg"); }
         .metalurgica { background-image: url("metalurgica.jpg"); }
@@ -98,14 +121,14 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            margin-top: 15px;
             border: 1px solid rgba(255,255,255,0.2);
         }
-        .review-card { padding: 15px; text-align: center; font-size: 0.85em; }
-        .stars { color: #ffd700; font-size: 1.2em; margin-bottom: 5px; }
-        .author { display: block; margin-top: 8px; font-weight: bold; color: #ffd700; }
+        .review-card { padding: 15px; text-align: center; }
+        .stars { color: #ffd700; font-size: 1.1em; margin-bottom: 5px; }
+        .review-text { font-size: 0.85em; margin: 0; font-style: italic; }
+        .author { display: block; margin-top: 8px; font-weight: bold; color: #ffd700; font-size: 0.8em; }
 
-        /* --- Modales --- */
+        /* --- Modales Adaptables --- */
         .overlay {
             display: none;
             position: fixed;
@@ -119,34 +142,23 @@
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%; max-width: 450px;
+            width: 85%; /* Más ancho en móviles */
+            max-width: 450px;
             background: #222;
             color: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             z-index: 1001;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border: 1px solid #444;
-            animation: modalIn 0.4s ease-out;
-        }
-        @keyframes modalIn {
-            from { opacity: 0; transform: translate(-50%, -60%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
         }
 
-        .modal h2 { color: #ffd700; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #888; }
-
-        .contact-list { list-style: none; padding: 0; margin-top: 20px; }
         .contact-item {
             display: flex; align-items: center; background: #333; margin-bottom: 10px;
-            padding: 12px; border-radius: 8px; text-decoration: none; color: white;
-            transition: 0.3s; border: 1px solid transparent;
+            padding: 15px; border-radius: 8px; text-decoration: none; color: white;
+            font-size: 0.9em;
         }
-        .contact-item:hover { background: #444; border-color: #ffd700; transform: translateX(5px); }
-        .contact-item b { color: #ffd700; margin-right: 10px; }
 
-        footer { background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
+        footer { background-color: #333; color: white; text-align: center; padding: 20px; font-size: 0.8em; }
 
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -159,7 +171,7 @@
     <nav>
         <ul>
             <li><a href="#">Inicio</a></li>
-            <li><a onclick="openModal('quienesSomos')">Quiénes somos</a></li>
+            <li><a onclick="openModal('quienesSomos')">Nosotros</a></li>
             <li><a onclick="openModal('contactoModal')">Contacto</a></li>
         </ul>
     </nav>
@@ -174,11 +186,11 @@
             </ul>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Excelente servicio, repararon mi notebook en tiempo récord."</p><span class="author">- Carlos M.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Muy honestos con el presupuesto y el trabajo impecable."</p><span class="author">- Laura S.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Me salvaron el celular cuando pensé que no tenía arreglo."</p><span class="author">- Pedro J.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"La configuración de mi Smart Home quedó funcionando de diez."</p><span class="author">- Martina V.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Atención personalizada y muy profesionales en todo."</p><span class="author">- Facundo L.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Excelente servicio, repararon mi notebook en tiempo récord."</p><span class="author">- Carlos M.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Muy honestos con el presupuesto y el trabajo impecable."</p><span class="author">- Laura S.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Me salvaron el celular cuando pensé que no tenía arreglo."</p><span class="author">- Pedro J.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"La configuración de mi Smart Home quedó funcionando de diez."</p><span class="author">- Martina V.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Atención personalizada y muy profesionales en todo."</p><span class="author">- Facundo L.</span></div></div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -193,11 +205,11 @@
             </ul>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"El portón quedó impecable, terminaciones de primera."</p><span class="author">- Juan P.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Instalación eléctrica segura y todo bajo normativa. Recomendados."</p><span class="author">- Roberto G.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Hicieron una estructura metálica para mi local y quedó robusta."</p><span class="author">- Sergio D.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Rápidos para solucionar un cortocircuito en casa un domingo."</p><span class="author">- Elena R.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Muy detallistas con la herrería artística, un lujo."</p><span class="author">- Oscar W.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"El portón quedó impecable, terminaciones de primera."</p><span class="author">- Juan P.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Instalación eléctrica segura y todo bajo normativa. Recomendados."</p><span class="author">- Roberto G.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Hicieron una estructura metálica para mi local y quedó robusta."</p><span class="author">- Sergio D.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Rápidos para solucionar un cortocircuito en casa un domingo."</p><span class="author">- Elena R.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Muy detallistas con la herrería artística, un lujo."</p><span class="author">- Oscar W.</span></div></div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -212,11 +224,11 @@
             </ul>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Dejaron mi jardín increíble, el riego automático es genial."</p><span class="author">- Maria B.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"La poda de altura fue muy profesional y segura."</p><span class="author">- Luis K.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Tienen un gusto excelente para el diseño del paisajismo."</p><span class="author">- Analía M.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Mantienen mi parque hace un año y siempre está impecable."</p><span class="author">- Gonzalo T.</span></div></div>
-                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p>"Atención cordial y cumplen siempre con los tiempos pactados."</p><span class="author">- Sofía P.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Dejaron mi jardín increíble, el riego automático es genial."</p><span class="author">- Maria B.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"La poda de altura fue muy profesional y segura."</p><span class="author">- Luis K.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Tienen un gusto excelente para el diseño del paisajismo."</p><span class="author">- Analía M.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Mantienen mi parque hace un año y siempre está impecable."</p><span class="author">- Gonzalo T.</span></div></div>
+                    <div class="swiper-slide"><div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"Atención cordial y cumplen siempre con los tiempos pactados."</p><span class="author">- Sofía P.</span></div></div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -227,9 +239,8 @@
 
     <div class="modal" id="quienesSomos">
         <span class="close-btn" onclick="closeAllModals()">×</span>
-        <h2>Quiénes Somos</h2>
+        <h2>Nosotros</h2>
         <p>Somos un equipo de amigos apasionados por el trabajo bien hecho. Unimos nuestras habilidades en tecnología, herrería y naturaleza para ofrecerte soluciones integrales.</p>
-        <p>Confianza y atención personalizada en cada proyecto.</p>
     </div>
 
     <div class="modal" id="contactoModal">
@@ -249,17 +260,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        // Inicializar todos los Sliders
         const swipers = new Swiper(".mySwiper", {
             loop: true,
-            autoplay: { 
-                delay: 4500, // Un poco más de tiempo para leer los textos
-                disableOnInteraction: false 
-            },
-            pagination: { 
-                el: ".swiper-pagination", 
-                clickable: true 
-            },
+            autoplay: { delay: 4500, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
         });
 
         function openModal(id) {
@@ -268,8 +272,7 @@
         }
 
         function closeAllModals() {
-            document.getElementById("quienesSomos").style.display = "none";
-            document.getElementById("contactoModal").style.display = "none";
+            document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
             document.getElementById("overlay").style.display = "none";
         }
     </script>
