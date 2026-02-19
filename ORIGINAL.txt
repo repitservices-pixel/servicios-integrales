@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios Integrales - Mza</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* --- Banner Principal --- */
+        header {
+            width: 100%;
+            height: 400px;
+            background-image: url("bannerfinal.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center top;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        /* --- Navegación --- */
+        nav {
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li { position: relative; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            transition: 0.3s;
+        }
+        nav a:hover { color: #ffd700; }
+
+        /* --- Contenedor de Columnas --- */
+        .container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            gap: 15px;
+            animation: fadeInUp 1.5s ease;
+        }
+        .column {
+            flex: 1;
+            padding: 30px 20px;
+            border-radius: 12px;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+        .column::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            transition: 0.5s;
+        }
+        .column h2, .column ul, .column .swiper {
+            position: relative;
+            z-index: 1;
+        }
+        .column ul { padding-left: 20px; flex-grow: 1; }
+        .column:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        
+        .electronica { background-image: url("electronica.jpg"); }
+        .metalurgica { background-image: url("metalurgica.jpg"); }
+        .jardineria { background-image: url("jardineria.jpg"); }
+
+        /* --- Slider de Calificaciones --- */
+        .swiper {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .review-card { padding: 15px; text-align: center; font-size: 0.85em; }
+        .stars { color: #ffd700; font-size: 1.2em; margin-bottom: 5px; }
+        .author { display: block; margin-top: 8px; font-weight: bold; color: #ffd700; }
+
+        /* --- Interfaz de Ventanas Modales (Unificada) --- */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 450px;
+            background: #222;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1001;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            animation: modalIn 0.4s ease-out;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .modal h2 { color: #ffd700; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px; cursor: pointer; color: #888;
+        }
+        .close-btn:hover { color: #fff; }
+
+        /* Estilos específicos para botones de contacto */
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background: #333;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .contact-item:hover {
+            background: #444;
+            border-color: #ffd700;
+            transform: translateX(5px);
+        }
+        .contact-item b { color: #ffd700; margin-right: 10px; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header></header>
+
+    <nav>
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a onclick="openModal('quienesSomos')">Quiénes somos</a></li>
+            <li><a onclick="openModal('contactoModal')">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="column electronica">
+            <h2>Servicio Técnico y Electrónicos</h2>
+            <ul>
+                <li>Reparación de PC, celulares y electrodomésticos.</li>
+                <li>Mantenimiento preventivo sistemas electrónicos.</li>
+                <li>Configuración de dispositivos inteligentes.</li>
+            </ul>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="review-card">
+                            <div class="stars">★★★★★</div>
+                            <p>"Excelente servicio, repararon mi notebook en tiempo récord."</p>
+                            <span class="author">- Carlos M.</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="review-card">
+                            <div class="stars">★★★★★</div>
+                            <p>"Muy honestos con el presupuesto y el trabajo impecable."</p>
+                            <span class="author">- Laura S.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <div class="column metalurgica">
+            <h2>Metalúrgica y Electricidad</h2>
+            <ul>
+                <li>Fabricación de estructuras y soldadura.</li>
+                <li>Reparaciones industriales y hogareñas.</li>
+                <li>Instalaciones eléctricas seguras.</li>
+            </ul>
+        </div>
+
+        <div class="column jardineria">
+            <h2>Jardinería y Paisajismo</h2>
+            <ul>
+                <li>Diseño y mantenimiento de parques.</li>
+                <li>Poda especializada y sistemas de riego.</li>
+                <li>Creación de espacios verdes armónicos.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
+
+    <div class="modal" id="quienesSomos">
+        <span class="close-btn" onclick="closeAllModals()">×</span>
+        <h2>Quiénes Somos</h2>
+        <p>Somos un equipo de amigos apasionados por el trabajo bien hecho. Unimos nuestras habilidades en tecnología, herrería y naturaleza para ofrecerte soluciones integrales.</p>
+        <p>Confianza y atención personalizada en cada proyecto.</p>
+    </div>
+
+    <div class="modal" id="contactoModal">
+        <span class="close-btn" onclick="closeAllModals()">×</span>
+        <h2>Contacto Directo</h2>
+        <p>Selecciona el área para comunicarte por WhatsApp:</p>
+        <div class="contact-list">
+            <a href="https://wa.me/5492615951320" target="_blank" class="contact-item">
+                <b>📱</b> Rep-iT (Electrónica)
+            </a>
+            <a href="https://wa.me/5492615877286" target="_blank" class="contact-item">
+                <b>🌿</b> Jardinería y Paisajismo
+            </a>
+            <a href="https://wa.me/5492615698250" target="_blank" class="contact-item">
+                <b>⚙️</b> Metalúrgica y Electricidad
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Servicios Integrales Mza</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        // Inicializar Slider
+        const swiper = new Swiper(".mySwiper", {
+            loop: true,
+            autoplay: { delay: 4000 },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+
+        // Funciones Unificadas para Modales
+        function openModal(id) {
+            document.getElementById(id).style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closeAllModals() {
+            document.getElementById("quienesSomos").style.display = "none";
+            document.getElementById("contactoModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+</body>
+</html>
